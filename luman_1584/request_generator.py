@@ -20,8 +20,7 @@ class RequestGenerator:
     departure_port_key = Payloads.Keys.DEPARTURE_PORT
     arrival_port_key = Payloads.Keys.ARRIVAL_PORT
 
-    def __init__(self,
-                 randomize_routes: bool = False):
+    def __init__(self, randomize_routes: bool = False):
         """
         Optionally randomize the origin/destination ports
         """

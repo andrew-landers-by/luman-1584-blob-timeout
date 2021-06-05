@@ -1,7 +1,7 @@
 import logging
 import sys
 
-LOGGING_LEVEL = logging.INFO
+LOGGING_LEVEL = logging.DEBUG
 
 def set_logging_config():
     logging.basicConfig(

@@ -1,9 +1,11 @@
-
+"""
+This module provides some predefined payloads for the
+Ocean PTA service. This can be extended as needed
+to investigate the performance of blob downloads.
+"""
 
 class Payloads:
-    """
-    <TODO>
-    """
+
     class Keys:
         TRANSACTION_ID = "transactionId"
         LATITUDE = "latitude"
