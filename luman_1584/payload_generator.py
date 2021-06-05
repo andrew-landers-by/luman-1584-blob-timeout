@@ -1,5 +1,5 @@
 """
-Helper functions
+Generate payloads for the Ocean PTA service
 """
 import random
 from typing import Dict, Iterable, List, Tuple
@@ -7,7 +7,7 @@ from .helpers import modeled_od_pairs, random_od_pairs
 from .payloads import Payloads
 
 
-class RequestGenerator:
+class PayloadGenerator:
     """
     Creates custom payloads with origin/
     destination routes that can be randomized

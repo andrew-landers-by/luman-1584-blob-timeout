@@ -11,7 +11,7 @@ import os
 import random
 from typing import Dict, Iterable, List, Union
 from .config import configs, ConfigKeys
-from .request_generator import RequestGenerator
+from .payload_generator import PayloadGenerator
 
 RNG_SEED = 4567
 
@@ -37,29 +37,29 @@ class Processor(object):
         self.items_per_payload: int = params.get(ConfigKeys.ITEMS_PER_PAYLOAD)
 
     def run(self):
-        request_generator = RequestGenerator(self.randomize_routes)
+        payload_generator = PayloadGenerator(self.randomize_routes)
         for idx, _ in enumerate(range(self.num_of_batches)):
             concurrent_payloads = [
-                request_generator.batch_payload(size=self.items_per_payload)
+                payload_generator.batch_payload(size=self.items_per_payload)
                 for _ in range(self.concurrent_payloads)
             ]
             self.logger.info(
                 f"Fetched a batch of {len(concurrent_payloads)} payloads containing {len(concurrent_payloads[0])} payloads each."  # noqa
             )
-            asyncio.run(self.bulk_process_requests(concurrent_payloads))
+            asyncio.run(self.bulk_process_payloads(concurrent_payloads))
 
             self.logger.info(
                 f"[Completed a set of concurrent batches. {idx + 1} of {self.num_of_batches} are complete]."
             )
 
-    async def bulk_process_requests(self, payloads: Iterable[Union[Dict, List]]) -> None:
+    async def bulk_process_payloads(self, payloads: Iterable[Union[Dict, List]]) -> None:
         """
         Concurrently process the input payloads
         """
         async with aiohttp.ClientSession() as session:
             tasks = []
             for payload in payloads:
-                tasks.append(self.process_request(payload=payload, session=session))
+                tasks.append(self.process_payload(payload=payload, session=session))
 
             self.logger.debug(f"Running {len(tasks)} coroutines")
             try:
@@ -69,7 +69,7 @@ class Processor(object):
                 self.logger.exception(e)
                 raise type(e)(message)
 
-    async def process_request(self, payload: Union[Dict, List],
+    async def process_payload(self, payload: Union[Dict, List],
                               session: aiohttp.ClientSession) -> None:
         """
         Process a single coroutine (that is, get the response for 1 payload)
