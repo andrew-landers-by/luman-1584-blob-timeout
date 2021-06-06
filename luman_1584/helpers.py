@@ -18,7 +18,6 @@ def load_env_vars() -> None:
     for key, value in env_vars.items():
         assert isinstance(value, str)
         os.environ[key] = value
-        print(f"{key}: {os.environ.get(key)}")
 
 def modeled_od_pairs() -> List[Tuple[str, str]]:
     """

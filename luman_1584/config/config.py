@@ -7,15 +7,19 @@ CONFIG_FILE_NAME = "config.yaml"
 logger = logging.getLogger(__file__)
 
 class Keys:
+
     # For environment settings:
     ENVIRONMENT = "ENVIRONMENT"
     LOCAL_URL_ENV_VAR = "LOCAL_URL"
     DEV_URL_ENV_VAR = "DEV_URL"
     MODEL_STORE_PATH_ENV_VAR = "MODEL_STORE_PATH"
 
+    LOGGING_LEVEL = "LOGGING_LEVEL"
+
     # For run parameters
     RUN_PARAMS = "RUN_PARAMS"
     IS_LOCAL_RUN = "IS_LOCAL_RUN"
+    RUN_CONTINUOUS = "RUN_CONTINUOUS"
     RANDOMIZE_ROUTES = "RANDOMIZE_ROUTES"
     NUM_OF_BATCHES = "NUM_OF_BATCHES"
     CONCURRENT_PAYLOADS = "CONCURRENT_PAYLOADS"

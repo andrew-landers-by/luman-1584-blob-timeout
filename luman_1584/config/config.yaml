@@ -1,14 +1,16 @@
 
-# Environment variable
 ENVIRONMENT:
   LOCAL_URL: "http://localhost:7071/api/ocean_pta_v1"
   DEV_URL: "https://ocean-pta-app-lana-dev-01.azurewebsites.net/api/ocean_pta_v1"
   MODEL_STORE_PATH: "/Users/Andrewlanders/projects/ocean_pta/models/v2/model_store"
 
-IS_LOCAL_RUN: True
+IS_LOCAL_RUN: False
+
+LOGGING_LEVEL: DEBUG
 
 RUN_PARAMS:
+  RUN_CONTINUOUS: False
   RANDOMIZE_ROUTES: True
-  NUM_OF_BATCHES: 5
-  CONCURRENT_PAYLOADS: 10
-  ITEMS_PER_PAYLOAD: 25
+  NUM_OF_BATCHES: 10
+  CONCURRENT_PAYLOADS: 5
+  ITEMS_PER_PAYLOAD: 10
