@@ -10,20 +10,20 @@ class Keys:
 
     # For environment settings:
     ENVIRONMENT = "ENVIRONMENT"
-    LOCAL_URL_ENV_VAR = "LOCAL_URL"
-    DEV_URL_ENV_VAR = "DEV_URL"
-    MODEL_STORE_PATH_ENV_VAR = "MODEL_STORE_PATH"
+    LOCAL_URL_ENV_VAR = "local_url"
+    DEV_URL_ENV_VAR = "dev_url"
+    MODEL_STORE_PATH_ENV_VAR = "model_store_path"
 
     LOGGING_LEVEL = "LOGGING_LEVEL"
 
     # For run parameters
     RUN_PARAMS = "RUN_PARAMS"
     IS_LOCAL_RUN = "IS_LOCAL_RUN"
-    RUN_CONTINUOUS = "RUN_CONTINUOUS"
-    RANDOMIZE_ROUTES = "RANDOMIZE_ROUTES"
-    NUM_OF_BATCHES = "NUM_OF_BATCHES"
-    CONCURRENT_PAYLOADS = "CONCURRENT_PAYLOADS"
-    ITEMS_PER_PAYLOAD = "ITEMS_PER_PAYLOAD"
+    RUN_CONTINUOUS = "run_continuous"
+    RANDOMIZE_ROUTES = "randomize_routes"
+    NUM_OF_BATCHES = "num_of_batches"
+    CONCURRENT_PAYLOADS = "concurrent_payloads"
+    ITEMS_PER_PAYLOAD = "items_per_payload"
 
 def load_config() -> dict:
     """
