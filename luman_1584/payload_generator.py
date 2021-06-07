@@ -1,5 +1,6 @@
 """
-Generate payloads for the Ocean PTA service
+Generate payloads for the Ocean PTA service. Extend this class
+to provide different types of payloads
 """
 import random
 from typing import Dict, Iterable, List, Tuple

@@ -1,6 +1,8 @@
 """
 Helper functions
 """
+import json
+import logging
 import os
 import random
 import re
@@ -9,6 +11,24 @@ from . import configs, ConfigKeys
 from .constants import Constants
 from ._regex import Regex
 
+logger = logging.getLogger(__name__)
+
+
+def summarize_run_params() -> str:
+    """
+    Generate a logging message summarizing the run parameters.
+    """
+    is_local = configs.get(ConfigKeys.IS_LOCAL_RUN)
+    run_params = configs.get(ConfigKeys.RUN_PARAMS)
+
+    if is_local:
+        url = os.environ.get(ConfigKeys.LOCAL_URL_ENV_VAR)
+    else:
+        url = os.environ.get(ConfigKeys.DEV_URL_ENV_VAR)
+
+    run_params['url'] = url
+
+    return f"\n{json.dumps(run_params, indent=3)}\n"
 
 def load_env_vars() -> None:
     """

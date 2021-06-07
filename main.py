@@ -1,16 +1,16 @@
 """
-This script attempts to reproduce a failure
-where heavy request traffic eventually causes the
-blob downloading process to hang.
+This script generates and runs batches of concurrent requests
+to the Ocean PTA service (currently, local or dev)
 """
+from luman_1584 import PayloadProcessor, summarize_run_params
 import logging
-from luman_1584 import PayloadProcessor
 
 logger = logging.getLogger(__file__)
 
 if __name__ == "__main__":
     try:
-        logger.info("Attempting to reproduce the failure")
+        message = f"Sending requests to the Ocean_PTA_Service with these local settings: {summarize_run_params()}"
+        logger.info(message)
         processor = PayloadProcessor()
         with processor.timer.scope("MAIN PROGRAM"):
             processor.process()

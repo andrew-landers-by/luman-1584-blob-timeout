@@ -14,7 +14,11 @@ class Keys:
     DEV_URL_ENV_VAR = "dev_url"
     MODEL_STORE_PATH_ENV_VAR = "model_store_path"
 
-    LOGGING_LEVEL = "LOGGING_LEVEL"
+    # Logging related configs
+    LOGGING = "LOGGING"
+    LOGGING_LEVEL = "level"
+    DO_LOG_TO_FILE = "log_to_file"
+    LOCAL_LOG_FILE_DIRECTORY = "local_log_file_directory"
 
     # For run parameters
     RUN_PARAMS = "RUN_PARAMS"

@@ -10,13 +10,13 @@ import json
 import logging
 import os
 import random
-from typing import Dict, Iterable, List, Union
+from typing import Any, Dict, Iterable, List, Tuple, Union
 from . import configs, ConfigKeys
 from .payload_generator import PayloadGenerator
 from .timing import TimingStats
 
 RUN_PARAMS = configs.get(ConfigKeys.RUN_PARAMS)
-RNG_SEED = 4567
+RNG_SEED = 5678
 
 class PayloadProcessor(object):
     """
@@ -81,42 +81,48 @@ class PayloadProcessor(object):
     
     def fetch_concurrent_jobs(self) -> List:
         """Fetch a new batch of requests"""
-        concurrent_payloads = [
+        return [
             self.payload_generator.batch_payload(size=self.items_per_payload)
             for _ in range(self.concurrent_payloads)
         ]
-        return concurrent_payloads
 
-    async def bulk_process_payloads(self, payloads: Iterable[Union[Dict, List]]) -> None:
+    async def bulk_process_payloads(self, payloads: Iterable[Union[Dict, List]]):
         """
         Concurrently process the inputs given in 'payloads'
         """
-        async with aiohttp.ClientSession() as session:
-            tasks = []
-            for payload in payloads:
-                tasks.append(self.process_payload(payload=payload, session=session))
+        try:
+            async with aiohttp.ClientSession() as session:
+                tasks = []
+                for payload in payloads:
+                    tasks.append(self.process_payload(payload=payload, session=session))
 
-            self.logger.debug(f"Running {len(tasks)} coroutines")
-            try:
+                self.logger.debug(f"Running {len(tasks)} concurrent requests as coroutines")
                 await asyncio.gather(*tasks)
-            except Exception as e:
-                message = f"An unexpected error occurred while processing the coroutines. Exception: {e}"
-                self.logger.exception(e)
-                raise type(e)(message)
+        except Exception as e:
+            message = f"An unexpected error occurred while processing the coroutines. Exception: {e}"
+            self.logger.exception(e)
+            raise Exception(e)
 
     async def process_payload(self,
                               payload: Union[Dict, List],
-                              session: aiohttp.ClientSession) -> None:
+                              session: aiohttp.ClientSession):
         """
         Process a single coroutine (that is, get the response for 1 payload)
         """
         try:
             async with self.timer.async_scope("PROCESS ONE REQUEST"):
                 response = await session.post(self.url, data=json.dumps(payload))
+                self.logger.debug(f"Completed a call to the function app with status code [{response.status}].")
+                if response.status == 200:
+                    res_json = await response.json()
+                    self.logger.debug(f"Successful result: {json.dumps(res_json)}")
+                else:
+                    message = f"BAD RESPONSE: {response}"
+                    self.logger.warning(message)
 
-            self.logger.debug(f"Completed a call to the function app with status code [{response.status}].")
-
+        except aiohttp.ContentTypeError as ce:
+            message = f"ContentTypeError occurred with input payload {json.dumps(payload)} response {response}: {ce}"
+            self.logger.exception(message)
         except Exception as e:
             message = f"Unexpected error occurred: {e}"
             self.logger.exception(message)
-            raise Exception(message)

@@ -4,12 +4,16 @@ ENVIRONMENT:
   dev_url: "https://ocean-pta-app-lana-dev-01.azurewebsites.net/api/ocean_pta_v1"
   model_store_path: "/Users/Andrewlanders/projects/ocean_pta/models/v2/model_store"
 
+LOGGING:
+  level: DEBUG
+  log_to_file: True
+  local_log_file_directory: "/Users/Andrewlanders/projects/python_logs/luman-1584"
+
 IS_LOCAL_RUN: True
-LOGGING_LEVEL: DEBUG
 
 RUN_PARAMS:
-  run_continuous: True
+  run_continuous: False
   randomize_routes: True
-  num_of_batches: 3
-  concurrent_payloads: 5
-  items_per_payload: 10
+  num_of_batches: 5
+  concurrent_payloads: 10
+  items_per_payload: 25
