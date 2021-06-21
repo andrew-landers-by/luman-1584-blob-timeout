@@ -13,8 +13,8 @@ LOGGING:
 IS_LOCAL_RUN: False
 
 RUN_PARAMS:
-  run_continuous: False
+  run_continuous: True
   randomize_routes: True
-  num_of_batches: 1
-  concurrent_payloads: 1
-  items_per_payload: 1
+  num_of_batches: 10
+  concurrent_payloads: 50
+  items_per_payload: 100
