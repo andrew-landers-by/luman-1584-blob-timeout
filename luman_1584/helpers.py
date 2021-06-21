@@ -54,6 +54,7 @@ def modeled_od_pairs() -> List[Tuple[str, str]]:
             source_code = match.group(2)[:locode_str_length]
             destination_code = match.group(2)[locode_str_length:]
             pairs.append((source_code, destination_code))
+
     return pairs
 
 

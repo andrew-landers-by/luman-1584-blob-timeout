@@ -13,6 +13,7 @@ class Keys:
     LOCAL_URL_ENV_VAR = "local_url"
     DEV_URL_ENV_VAR = "dev_url"
     MODEL_STORE_PATH_ENV_VAR = "model_store_path"
+    API_KEY = "api_key"
 
     # Logging related configs
     LOGGING = "LOGGING"

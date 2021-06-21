@@ -16,7 +16,7 @@ from .payload_generator import PayloadGenerator
 from .timing import TimingStats
 
 RUN_PARAMS = configs.get(ConfigKeys.RUN_PARAMS)
-RNG_SEED = 5678
+RNG_SEED = 6789
 
 class PayloadProcessor(object):
     """
@@ -118,7 +118,7 @@ class PayloadProcessor(object):
                     self.logger.debug(f"Successful result: {json.dumps(res_json)}")
                 else:
                     message = f"BAD RESPONSE: {response}"
-                    self.logger.warning(message)
+                    self.logger.error(message)
 
         except aiohttp.ContentTypeError as ce:
             message = f"ContentTypeError occurred with input payload {json.dumps(payload)} response {response}: {ce}"
