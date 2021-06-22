@@ -18,6 +18,7 @@ from .timing import TimingStats
 RUN_PARAMS = configs.get(ConfigKeys.RUN_PARAMS)
 RNG_SEED = 6789
 
+
 class PayloadProcessor(object):
     """
     Sends batches of requests (asynchronously) to the Ocean PTA service.
@@ -111,8 +112,18 @@ class PayloadProcessor(object):
         """
         try:
             async with self.timer.async_scope("PROCESS ONE REQUEST"):
-                response = await session.post(self.url, data=json.dumps(payload))
+
+                headers = {
+                    'x-functions-key': os.environ.get(ConfigKeys.API_KEY),
+                    'content-type': 'application/json'
+                }
+                response = await session.post(
+                    self.url,
+                    headers=headers,
+                    data=json.dumps(payload)
+                )
                 self.logger.debug(f"Completed a call to the function app with status code [{response.status}].")
+
                 if response.status == 200:
                     res_json = await response.json()
                     self.logger.debug(f"Successful result: {json.dumps(res_json)}")
@@ -122,6 +133,7 @@ class PayloadProcessor(object):
 
         except aiohttp.ContentTypeError as ce:
             message = f"ContentTypeError occurred with input payload {json.dumps(payload)} response {response}: {ce}"
+            print(f"Status: {response.status}")
             self.logger.exception(message)
         except Exception as e:
             message = f"Unexpected error occurred: {e}"

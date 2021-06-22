@@ -1,9 +1,9 @@
 
 ENVIRONMENT:
   local_url: "http://localhost:7071/api/ocean_pta_v1"
-  dev_url: "https://lana-pta-beta-app-dev-01.azurewebsites.net/api/ocean_pta_v1"
+  dev_url: "https://ocean-pta-app-lana-dev-01.azurewebsites.net/api/ocean_pta_v1"
   model_store_path: "/Users/Andrewlanders/projects/ocean_pta/models/v2/model_store"
-  api_key: "<<API_KEY_PLACEHOLDER>>"
+  api_key: "<<api_key_placeholder>>"
 
 LOGGING:
   level: DEBUG
@@ -15,6 +15,6 @@ IS_LOCAL_RUN: False
 RUN_PARAMS:
   run_continuous: True
   randomize_routes: True
-  num_of_batches: 10
-  concurrent_payloads: 50
-  items_per_payload: 100
+  num_of_batches: 1
+  concurrent_payloads: 1
+  items_per_payload: 1
